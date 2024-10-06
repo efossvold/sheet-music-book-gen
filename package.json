@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "start": "tsx html2pdf.ts",
+    "watch": "tsx --watch html2pdf.ts"
+  },
+  "dependencies": {
+    "@ilovepdf/ilovepdf-nodejs": "^0.2.5",
+    "@types/node": "^22.7.4",
+    "chrome-launcher": "^1.1.0",
+    "dotenv": "^16.4.5",
+    "html-pdf-chrome": "^0.8.4",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.2"
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+}
