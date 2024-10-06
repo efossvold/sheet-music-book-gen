@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "tsx html2pdf.ts",
+    "make": "./make_book.sh",
+    "html2pdf": "tsx html2pdf.ts",
     "watch": "tsx --watch html2pdf.ts"
   },
   "dependencies": {
