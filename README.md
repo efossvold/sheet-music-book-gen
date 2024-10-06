@@ -14,4 +14,4 @@ pyenv activate
 
 ## Create sheet music book
 
-`./make_book.sh` or `npm run make`
+`./make_book.sh` or `bun run make`
