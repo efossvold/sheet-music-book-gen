@@ -33,14 +33,14 @@ cat $TMP_DIR/toc.txt
 echo 
 
 echo Generating TOC PDF
-npx tsx html2pdf.ts
+bun run tsx html2pdf.ts
 or exit 
 
 echo Adding ToC page
 qpdf --empty --pages $TMP_DIR/in.pdf 1 $TMP_DIR/toc.pdf 1 $TMP_DIR/in.pdf 3-z -- $TMP_DIR/out_toc.pdf
 
 echo Adding page numbers
-npx tsx add_page_numbers.ts $TMP_DIR/out_toc.pdf $TMP_DIR/out_toc_numbered.pdf
+bun run tsx add_page_numbers.ts $TMP_DIR/out_toc.pdf $TMP_DIR/out_toc_numbered.pdf
 or exit 
 
 echo Adding page labels
@@ -51,5 +51,8 @@ echo Adding internal ToC
 pdftocio -o $TMP_DIR/out.pdf $TMP_DIR/out_labeled.pdf < $TMP_DIR/toc.txt
 or exit 
 
+echo Compress and flatten PDF
+pdfs $TMP_DIR/out.pdf --profile pdfsqueezer-flatten.pdfscp --output $TMP_DIR/out-flat.pdf
+
 echo Copy PDF to destination
-cp -vf $TMP_DIR/out.pdf $DEST_PDF 
+cp -vf $TMP_DIR/out-flat.pdf $DEST_PDF 
