@@ -8,6 +8,7 @@ const TOC_TXT = `${TMP_DIR}/toc.txt`;
 const TOC_HTML = `${TMP_DIR}/toc.html`;
 const TOC_PDF = `${TMP_DIR}/toc.pdf`;
 const COMPOSERS_TXT = `${TMP_DIR}/composers.txt`;
+const TITLES_PER_PAGE = 34;
 
 async function run() {
   const chrome = await launch({
@@ -21,6 +22,8 @@ async function run() {
   const toc = readFileSync(TOC_TXT, "utf8");
   const template = readFileSync(TOC_TMPL, "utf8");
   const composers = readFileSync(COMPOSERS_TXT, "utf8").split("\n");
+  let isPageOdd = true;
+
   const toc_tags = toc
     .trim()
     .split("\n")
@@ -31,8 +34,11 @@ async function run() {
       if (matches) {
         const match = matches.next();
 
-        if (match.value.length > 2) {
-          return `<div class="row">
+        if (index > 0 && index % TITLES_PER_PAGE === 0) {
+          isPageOdd = !isPageOdd;
+          return `<div class="pagebreak"><\/div>`;
+        } else if (match.value.length > 2) {
+          return `<div class="row ${isPageOdd ? "odd" : "even"}">
             <div class="title">${match.value[1]}<\/div>
             <div class="composer">${composers[index]}<\/div>
             <div class="line"><\/div>

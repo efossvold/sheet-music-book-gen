@@ -2,6 +2,7 @@
 set TMP_DIR tmp
 set SCORES_DIR $HOME/Documents/MuseScore4/Scores
 set DEST_PDF "$HOME/Documents/Music/Piano Sheet Music.pdf"
+set START_TIME (date +%s)
 
 rm -rf $TMP_DIR/*
 
@@ -37,7 +38,7 @@ bun run tsx html2pdf.ts
 or exit 
 
 echo Adding ToC page
-qpdf --empty --pages $TMP_DIR/in.pdf 1 $TMP_DIR/toc.pdf 1 $TMP_DIR/in.pdf 3-z -- $TMP_DIR/out_toc.pdf
+qpdf --warning-exit-0 --empty --pages $TMP_DIR/in.pdf 1 $TMP_DIR/toc.pdf 1-2 $TMP_DIR/in.pdf 4-z -- $TMP_DIR/out_toc.pdf
 
 echo Adding page numbers
 bun run tsx add_page_numbers.ts $TMP_DIR/out_toc.pdf $TMP_DIR/out_toc_numbered.pdf
@@ -52,7 +53,13 @@ pdftocio -o $TMP_DIR/out.pdf $TMP_DIR/out_labeled.pdf < $TMP_DIR/toc.txt
 or exit 
 
 echo Compress and flatten PDF
-pdfs $TMP_DIR/out.pdf --profile pdfsqueezer-flatten.pdfscp --output $TMP_DIR/out-flat.pdf
+pdfs $TMP_DIR/out.pdf --profile pdfsqueezer-flatten.pdfscp --replace --output $TMP_DIR/out_flat.pdf
+
+echo Creating print version
+qpdf --warning-exit-0 --empty --pages blank_page.pdf $TMP_DIR/out_flat.pdf 2-z -- $TMP_DIR/out_print_flat.pdf
 
 echo Copy PDF to destination
-cp -vf $TMP_DIR/out-flat.pdf $DEST_PDF 
+cp -vf $TMP_DIR/out_flat.pdf $DEST_PDF 
+
+echo PDF created in (math (date +%s) - $START_TIME)s
+

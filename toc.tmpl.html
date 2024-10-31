@@ -20,6 +20,10 @@
         font-style: normal;
       }
 
+      h1 {
+        margin-left: 10px;
+      }
+
       .row {
         display: -webkit-box;
         display: flex;
@@ -28,6 +32,14 @@
         justify-content: space-between;
         align-items: flex-end;
         margin-bottom: 6px;
+      }
+
+      .odd {
+        margin-left: 10px;
+      }
+
+      .even {
+        padding-right: 10px;
       }
 
       .title {
@@ -51,6 +63,14 @@
 
       .page {
         color: black;
+      }
+
+      .pagebreak {
+        page-break-before: always;
+      }
+
+      .pagebreak + .row {
+        padding-top: 20px;
       }
     </style>
   </head>
