@@ -9,6 +9,8 @@ const TOC_HTML = `${TMP_DIR}/toc.html`;
 const TOC_PDF = `${TMP_DIR}/toc.pdf`;
 const COMPOSERS_TXT = `${TMP_DIR}/composers.txt`;
 const TITLES_PER_PAGE = 34;
+const EDWIN_FONT = readFileSync("./assets/edwin-roman.woff2", "base64");
+const EDWIN_BOLD_FONT = readFileSync("./assets/edwin-bold.woff2", "base64");
 
 const chrome = await launch({
   startingUrl: "https://google.com",
@@ -19,7 +21,9 @@ console.log("Chrome running on port", chrome.port);
 console.log("Reading template");
 
 const toc = readFileSync(TOC_TXT, "utf8");
-const template = readFileSync(TOC_TMPL, "utf8");
+const template = readFileSync(TOC_TMPL, "utf8")
+  .replace("{{EDWIN_FONT}}", EDWIN_FONT)
+  .replace("{{EDWIN_BOLD_FONT}}", EDWIN_BOLD_FONT);
 const composers = readFileSync(COMPOSERS_TXT, "utf8").split("\n");
 let isPageOdd = true;
 

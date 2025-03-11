@@ -10,6 +10,8 @@ const TOC_HTML = `${TMP_DIR}/toc.html`;
 const TOC_PDF = `${TMP_DIR}/toc.pdf`;
 const SOURCE_DIR = `${homedir()}/Documents/Music/Piano Sheet Music`;
 const TITLES_PER_PAGE = 34;
+const EDWIN_FONT = readFileSync("./assets/edwin-roman.woff2", "base64");
+const EDWIN_BOLD_FONT = readFileSync("./assets/edwin-bold.woff2", "base64");
 
 const glob = new Glob("*.pdf");
 
@@ -26,7 +28,10 @@ const chrome = await launch({
 console.log("Chrome running on port", chrome.port);
 console.log("Reading template");
 
-const template = readFileSync(TOC_TMPL, "utf8");
+const template = readFileSync(TOC_TMPL, "utf8")
+  .replace("{{EDWIN_FONT}}", EDWIN_FONT)
+  .replace("{{EDWIN_BOLD_FONT}}", EDWIN_BOLD_FONT);
+
 let isPageOdd = true;
 
 const toc_tags = files
