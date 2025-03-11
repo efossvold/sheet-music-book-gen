@@ -14,4 +14,12 @@ pyenv activate
 
 ## Create sheet music book
 
-`./make_book.sh` or `bun run make`
+`./make_book.sh` or `bun run make-book`
+
+## Create single sheet music with cover
+
+`./add_cover_page.sh` or `bun run make-covered`
+
+## Create all (covered) music sheets
+
+`./add_cover_pages.sh` or `bun run make-all-covered`

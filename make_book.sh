@@ -34,14 +34,14 @@ cat $TMP_DIR/toc.txt
 echo 
 
 echo Generating TOC PDF
-bun run tsx html2pdf.ts
+bun run tsx src/html2pdf.ts
 or exit 
 
 echo Adding ToC page
 qpdf --warning-exit-0 --empty --pages $TMP_DIR/in.pdf 1 $TMP_DIR/toc.pdf 1-2 $TMP_DIR/in.pdf 4-z -- $TMP_DIR/out_toc.pdf
 
 echo Adding page numbers
-bun run tsx add_page_numbers.ts $TMP_DIR/out_toc.pdf $TMP_DIR/out_toc_numbered.pdf
+bun run tsx src/add_page_numbers.ts $TMP_DIR/out_toc.pdf $TMP_DIR/out_toc_numbered.pdf
 or exit 
 
 echo Adding page labels

@@ -1,4 +1,9 @@
 {
-  "compilerOptions": {},
-  "files": ["env.d.ts", "add_page_numbers.ts", "html2pdf.ts"]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": ["esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext"
+  }
 }

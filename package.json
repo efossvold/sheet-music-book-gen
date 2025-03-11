@@ -1,11 +1,14 @@
 {
   "scripts": {
-    "make": "./make_book.sh",
-    "html2pdf": "tsx html2pdf.ts",
-    "watch": "tsx --watch html2pdf.ts"
+    "make-book": "./make_book.sh",
+    "make-toc": "bun run src/create_toc.ts",
+    "make-covered": "./add_cover_page.sh",
+    "make-all-covered": "./add_cover_pages.sh",
+    "watch-book": "tsx --watch html2pdf.ts"
   },
   "dependencies": {
     "@ilovepdf/ilovepdf-nodejs": "^0.2.5",
+    "@types/bun": "^1.2.5",
     "@types/node": "^22.7.4",
     "chrome-launcher": "^1.1.0",
     "dotenv": "^16.4.5",
