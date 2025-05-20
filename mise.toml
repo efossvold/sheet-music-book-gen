@@ -1,0 +1,14 @@
+[tools]
+bun = "1.2"
+python = "3.13"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
+_.path = "./scripts"
+
+[tasks]
+make-book = "scripts/make_book.sh"
+make-covered = "scripts/add_cover_page.sh"
+make-all-covered = "scripts/add_cover_pages.sh"
+make-toc = "bun run src/create_toc.ts"
+watch-book = "bun run --watch src/html2pdf.ts"
