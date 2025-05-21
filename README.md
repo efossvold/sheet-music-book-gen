@@ -6,9 +6,10 @@ Automatically merge music sheet andd generate TOC with titles/composers.
 
 ```
 brew install mise poppler qpdf ruby
-gem install pdfunite
-mise u python@3.12.7
-pip install -U pdf.tocgen
+gem i pdfunite
+mise i
+bun i
+pip install -U -r requirements.txt
 ```
 
 ## Create sheet music book
