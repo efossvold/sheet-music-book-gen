@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync } from "fs";
 import * as htmlPdf from "html-pdf-chrome";
 import { launch } from "chrome-launcher";
 
-const TMP_DIR = "tmp";
-const TOC_TMPL = "toc.tmpl.html";
+const TOC_TMPL = `${process.env.TEMPLATES_DIR}/toc.tmpl.html`;
+const TMP_DIR = process.env.TMP_DIR;
 const TOC_TXT = `${TMP_DIR}/toc.txt`;
 const TOC_HTML = `${TMP_DIR}/toc.html`;
 const TOC_PDF = `${TMP_DIR}/toc.pdf`;
@@ -36,16 +36,19 @@ const toc_tags = toc
 
     if (matches) {
       const match = matches.next();
+      const composer = composers[index];
+      const title = match.value[1].replace(composer, "").trim();
+      const page = match.value[2];
 
       if (index > 0 && index % TITLES_PER_PAGE === 0) {
         isPageOdd = !isPageOdd;
         return `<div class="pagebreak"><\/div>`;
       } else if (match.value.length > 2) {
         return `<div class="row ${isPageOdd ? "odd" : "even"}">
-            <div class="title">${match.value[1]}<\/div>
-            <div class="composer">${composers[index]}<\/div>
+            <div class="title">${title}<\/div>
+            <div class="composer">${composer}<\/div>
             <div class="line"><\/div>
-            <div class="page">${match.value[2]}<\/div>
+            <div class="page">${page}<\/div>
             <\/div>`;
       }
     }

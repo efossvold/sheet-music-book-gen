@@ -1,12 +1,17 @@
 import { writeFileSync } from "fs";
 import ILovePDFApi from "@ilovepdf/ilovepdf-nodejs";
 import ILovePDFFile from "@ilovepdf/ilovepdf-nodejs/ILovePDFFile";
-import "dotenv/config";
 
-const api = new ILovePDFApi(
-  process.env.I_LOVE_PDF_API_PUBLIC,
-  process.env.I_LOVE_PDF_API_SECRET_KEY
-);
+const { I_LOVE_PDF_API_PUBLIC, I_LOVE_PDF_API_SECRET_KEY } = process.env;
+
+if (!I_LOVE_PDF_API_PUBLIC || !I_LOVE_PDF_API_SECRET_KEY) {
+  console.log(
+    `API key or secret missing. Need to script with 'mise run' to load .env file`
+  );
+  process.exit(1);
+}
+
+const api = new ILovePDFApi(I_LOVE_PDF_API_PUBLIC, I_LOVE_PDF_API_SECRET_KEY);
 
 const task = api.newTask("pagenumber");
 

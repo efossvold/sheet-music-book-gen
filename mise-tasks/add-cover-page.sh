@@ -1,20 +1,10 @@
 #!/usr/bin/env fish
-set TMP_DIR tmp
-set SCRIPT (basename (status -f))
-set SCORES_DIR $HOME/Documents/MuseScore4/Scores
-set DEST_DIR "$HOME/Documents/Music/Piano Sheet Music"
 set START_TIME (date +%s)
 
-if test -d $TMP_DIR; rm -rf $TMP_DIR; end
-mkdir $TMP_DIR
+#MISE description="Add cover page to PDF sheet music file"
+#USAGE arg "<file>" help="The file to add cover page to"
 
-set FILEPATH $argv[1]
-
-if test -z $FILEPATH
-  echo Usage:
-  echo $SCRIPT sheet_music.pdf
-  exit
-end
+set FILEPATH $usage_file
 
 if test -e $FILEPATH
 else
@@ -22,9 +12,11 @@ else
   exit
 end
 
+if test -d $TMP_DIR; rm -rf $TMP_DIR; end
+mkdir $TMP_DIR
 
 set BASENAME (basename $FILEPATH)
-set DEST_FILE "$DEST_DIR/$BASENAME"
+set DEST_FILE "$COVERED_DEST_DIR/$BASENAME"
 set TITLE (echo $BASENAME | awk -F ' - '  '{print $1}')
 set COMPOSER (path basename -E $BASENAME | awk -F ' - '  '{print $2}')
 
@@ -34,6 +26,7 @@ if test -z $TITLE
   echo Title not found
   exit
 end
+
 if test -z $COMPOSER
   echo Composer not found
   exit

@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "lib": ["esnext"],
-    "module": "esnext",
+    "lib": ["ESNext"],
+    "module": "Preserve",
     "moduleResolution": "node",
-    "target": "esnext"
+    "target": "ESNext"
   }
 }

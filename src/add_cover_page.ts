@@ -4,10 +4,9 @@ import { launch } from "chrome-launcher";
 
 const TITLE = Bun.argv[3];
 const COMPOSER = Bun.argv[4];
-const TMP_DIR = "tmp";
-const TOC_TMPL = "cover.tmpl.html";
-const TOC_HTML = `${TMP_DIR}/cover.html`;
-const TOC_PDF = `${TMP_DIR}/cover.pdf`;
+const TOC_TMPL = `${process.env.TEMPLATES_DIR}/cover.tmpl.html`;
+const TOC_HTML = `${process.env.TMP_DIR}/cover.html`;
+const TOC_PDF = `${process.env.TMP_DIR}/cover.pdf`;
 
 const chrome = await launch({
   startingUrl: "https://google.com",

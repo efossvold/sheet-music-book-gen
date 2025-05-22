@@ -4,11 +4,20 @@ python = "3.13"
 
 [env]
 _.python.venv = { path = ".venv", create = true }
-_.path = "./scripts"
+_.path = [
+    "./mise-tasks",
+    "{{config_root}}/node_modules/.bin"
+  ]
+_.file = ".env"
+ASSETS_DIR = "{{config_root}}/assets"
+TEMPLATES_DIR = "{{config_root}}/templates"
+TMP_DIR = "{{config_root}}/tmp"
+SCORES_DIR = "{{env.HOME}}/Documents/MuseScore4/Scores"
+BOOK_PDF = "{{env.HOME}}/Documents/Music/Piano Sheet Music.pdf"
+# Destination dir for add-cover-page
+COVERED_DEST_DIR = "{{env.HOME}}/Documents/Music/Piano Sheet Music" 
 
-[tasks]
-make-book = "scripts/make_book.sh"
-make-covered = "scripts/add_cover_page.sh"
-make-all-covered = "scripts/add_cover_pages.sh"
-make-toc = "bun run src/create_toc.ts"
-watch-book = "bun run --watch src/html2pdf.ts"
+
+[tasks.create-folder-toc]
+description = "Create PDF with ToC"
+run = "bun run src/create_folder_toc.ts"

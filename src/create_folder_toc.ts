@@ -4,10 +4,9 @@ import * as htmlPdf from "html-pdf-chrome";
 import { launch } from "chrome-launcher";
 import { Glob } from "bun";
 
-const TMP_DIR = "tmp";
-const TOC_TMPL = "toc_folder.tmpl.html";
-const TOC_HTML = `${TMP_DIR}/toc.html`;
-const TOC_PDF = `${TMP_DIR}/toc.pdf`;
+const TOC_TMPL = `${process.env.TEMPLATES_DIR}/toc_folder.tmpl.html`;
+const TOC_HTML = `${process.env.TMP_DIR}/toc_folder.html`;
+const TOC_PDF = `${process.env.TMP_DIR}/toc_folder.pdf`;
 const SOURCE_DIR = `${homedir()}/Documents/Music/Piano Sheet Music`;
 const TITLES_PER_PAGE = 34;
 const EDWIN_FONT = readFileSync("./assets/edwin-roman.woff2", "base64");
@@ -38,13 +37,14 @@ const toc_tags = files
   .sort()
   .map((line, index) => {
     const [title, composer] = line.replace(".pdf", "").split(" - ");
+    const clean_title = title.replace(composer, "").trim();
 
     if (index > 0 && index % TITLES_PER_PAGE === 0) {
       isPageOdd = !isPageOdd;
       return `<div class="pagebreak"><\/div>`;
     } else
       return `<div class="row ${isPageOdd ? "odd" : "even"}">
-                <div class="title">${title}<\/div>
+                <div class="title">${clean_title}<\/div>
                 <div class="composer">${composer}</div>
               </div>`;
   })
@@ -64,10 +64,10 @@ const pdf = await htmlPdf.create(html, {
 });
 
 console.log("PDF generated");
-console.log("Writing PDF to file");
 
 await pdf.toFile(TOC_PDF);
 writeFileSync(TOC_HTML, html, "utf-8");
+console.log(`Wrote PDF to '${TOC_PDF}'"`);
 
 chrome.kill();
 console.log("Done");
