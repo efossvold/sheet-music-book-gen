@@ -12,14 +12,18 @@ bun i
 pip install -U -r requirements.txt
 ```
 
-## Create sheet music book
+## Create sheet music book for scores in $SCORES_DIR
 
 `mise run make-book`
 
-## Create single sheet music with cover
+## Add cover to a sheet music PDF
 
-`mise run make-covered`
+`mise run add-cover-page path/to/pdf`
 
-## Create all (covered) music sheets
+## Add cover to all PDFs in $SCORES_DIR
 
-`mise run make-all-covered`
+`mise run add-cover-pages`
+
+## Create ToC PDF for PDFs in $COVERED_DEST_DIR
+
+`mise run create-folder-toc`
